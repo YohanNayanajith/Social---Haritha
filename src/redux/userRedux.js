@@ -18,7 +18,8 @@ const userSlice = createSlice({
     loginSuccess: (state, action) => {
       state.isFetching = false;
       state.currentUser = action.payload.data;
-      state.token = action.payload.token;
+      // state.token = action.payload.token;
+      state.token = "123";
       //please set permissions
       // state.authorities = action.payload.authorities;
     },
