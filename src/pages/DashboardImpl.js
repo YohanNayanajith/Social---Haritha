@@ -17,15 +17,15 @@ export const DashboardImpl = () => {
   const [other, setOther] = useState(0);
   const [admin, setAdmin] = useState(0);
   const [event, setEvent] = useState(0);
-  const [loading1, setLoading1] = useState(true);
-  const [loading2, setLoading2] = useState(true);
-  const [loading3, setLoading3] = useState(true);
+  const [loading1, setLoading1] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [loading3, setLoading3] = useState(false);
   const [featuredData, setFeaturedData] = useState([]);
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.user.token);
-  const otherUsers = useSelector((state) => state.user.otherUsers);
-  const adminUsers = useSelector((state) => state.user.adminUsers);
-  const events = useSelector((state) => state.event.events);
+  // const token = useSelector((state) => state.user.token);
+  // const otherUsers = useSelector((state) => state.user.otherUsers);
+  // const adminUsers = useSelector((state) => state.user.adminUsers);
+  // const events = useSelector((state) => state.event.events);
 
   const MONTHS = useMemo(
     () => [
@@ -45,55 +45,55 @@ export const DashboardImpl = () => {
     []
   );
 
-  useEffect(() => {
-    const getCountInventoryData = async () => {
-      const result1 = await getUsersDummy(dispatch, token);
-      if (result1) {
-        setOther(result1.length);
-        console.log("Success");
-        setLoading1(false);
-      } else {
-        console.log("Unsuccess");
-      }
-    };
-    getCountInventoryData();
-  }, []);
+  // useEffect(() => {
+  //   const getCountInventoryData = async () => {
+  //     const result1 = await getUsersDummy(dispatch, token);
+  //     if (result1) {
+  //       setOther(result1.length);
+  //       console.log("Success");
+  //       setLoading1(false);
+  //     } else {
+  //       console.log("Unsuccess");
+  //     }
+  //   };
+  //   getCountInventoryData();
+  // }, []);
 
-  useEffect(() => {
-    const getCountInventoryData = async () => {
-      const result2 = await getAdminUsersDummy(dispatch, token);
-      if (result2) {
-        console.log(result2.length);
-        console.log(admin);
-        setAdmin(result2.length);
-        console.log("Success");
-        setLoading2(false);
-      } else {
-        console.log("Unsuccess");
-      }
-    };
-    getCountInventoryData();
-  }, []);
+  // useEffect(() => {
+  //   const getCountInventoryData = async () => {
+  //     const result2 = await getAdminUsersDummy(dispatch, token);
+  //     if (result2) {
+  //       console.log(result2.length);
+  //       console.log(admin);
+  //       setAdmin(result2.length);
+  //       console.log("Success");
+  //       setLoading2(false);
+  //     } else {
+  //       console.log("Unsuccess");
+  //     }
+  //   };
+  //   getCountInventoryData();
+  // }, []);
 
-  useEffect(() => {
-    const getCountInventoryData = async () => {
-      const result = await getEventDummy(dispatch, token);
-      if (result) {
-        setEvent(result.length);
-        setLoading3(false);
-        console.log("Success");
-      } else {
-        console.log("Unsuccess");
-      }
-    };
-    getCountInventoryData();
-  }, []);
+  // useEffect(() => {
+  //   const getCountInventoryData = async () => {
+  //     const result = await getEventDummy(dispatch, token);
+  //     if (result) {
+  //       setEvent(result.length);
+  //       setLoading3(false);
+  //       console.log("Success");
+  //     } else {
+  //       console.log("Unsuccess");
+  //     }
+  //   };
+  //   getCountInventoryData();
+  // }, []);
 
   let featureData = [
     {
       index: 1,
       title: "No of Users",
-      number: other,
+      number: 20,
       // percentage: -1.4,
       isDowngrade: false,
       // text: "Compared to last month",
@@ -101,7 +101,7 @@ export const DashboardImpl = () => {
     {
       index: 2,
       title: "No of Posts",
-      number: event,
+      number: 32,
       // percentage: +1.4,
       isDowngrade: true,
       // text: "Compared to last month",

@@ -22,7 +22,7 @@ export const PostListImpl = () => {
   const [loading, setLoading] = useState(true);
   const [trigger, setTrigger] = useState("s");
   const [deleteTrigger, setDeleteTrigger] = useState("s");
-  const token = useSelector((state) => state.user.token);
+  // const token = useSelector((state) => state.user.token);
   const posts = useSelector((state) => state.post.posts);
   const permissionsData = useSelector(
     (state) => state.permissionData.permissionsData
@@ -36,7 +36,7 @@ export const PostListImpl = () => {
   React.useEffect(() => {
     const getDataFromDB = async () => {
       dispatch(removePosts());
-      const result = await getPost(dispatch, token);
+      const result = await getPost(dispatch);
       if (result) {
         console.log("Get post data success");
         setTrigger(trigger + "s");
@@ -55,13 +55,13 @@ export const PostListImpl = () => {
         (item) => {
           // if (item.status) {
           rowData.push({
-            id: item.post_id,
-            col1: item.first_name,
-            col2: item.last_name,
-            col3: item.description,
-            col4: item.created_date,
-            col5: item.user_id,
-            col7: item.post_url,
+            id: item._id,
+            col1: item.img,
+            // col2: item.last_name,
+            col3: item.desc,
+            col4: item.createdAt,
+            col5: item.userId,
+            // col7: item.post_url,
           });
         }
         // }
@@ -82,7 +82,7 @@ export const PostListImpl = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const status = await deletePost(id, dispatch, token);
+        const status = await deletePost(id, dispatch);
         if (status) {
           setDeleteTrigger(deleteTrigger + "z");
           Swal.fire("Deleted!", "Your post has been deleted.", "success");
@@ -125,20 +125,20 @@ export const PostListImpl = () => {
     { field: "id", headerName: "Post Id", width: 300 },
     {
       field: "col1",
-      headerName: "Publish Username",
+      headerName: "Post Image",
       width: 220,
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            {/* <img className="productListImg" src={params.row.col10} alt="" /> */}
-            {params.row.col1 + " " + params.row.col2}
+            <img className="productListImg" src={params.row.col1} alt="" />
+            {/* {params.row.col1 + " " + params.row.col2} */}
           </div>
         );
       },
     },
     { field: "col3", headerName: "Description", width: 180 },
     { field: "col4", headerName: "Create Date", width: 180 },
-    { field: "col7", headerName: "Post URL", width: 180 },
+    // { field: "col7", headerName: "Post URL", width: 180 },
     // {
     //   field: "col9",
     //   headerName: "Event Status",
@@ -181,7 +181,7 @@ export const PostListImpl = () => {
           <>
             {/* params.row.isCancel */}
             <Stack direction="row" alignItems="center" spacing={1}>
-              {permissionsData.update_posts ? (
+              {/* {permissionsData.update_posts ? (
                 <IconButton
                   aria-label="edit"
                   size="large"
@@ -192,20 +192,16 @@ export const PostListImpl = () => {
                 </IconButton>
               ) : (
                 <></>
-              )}
+              )} */}
 
-              {permissionsData.delete_posts ? (
-                <IconButton
-                  aria-label="delete"
-                  size="large"
-                  color="error"
-                  onClick={() => deleteItem(params.row.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              ) : (
-                <></>
-              )}
+              <IconButton
+                aria-label="delete"
+                size="large"
+                color="error"
+                onClick={() => deleteItem(params.row.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
             </Stack>
           </>
         );
@@ -236,7 +232,7 @@ export const PostListImpl = () => {
               <h2>Posts</h2>
             </div>
             <div>
-              {permissionsData.create_posts ? (
+              {/* {permissionsData.create_posts ? (
                 <Button
                   variant="contained"
                   href="/createPost"
@@ -247,7 +243,7 @@ export const PostListImpl = () => {
                 </Button>
               ) : (
                 <></>
-              )}
+              )} */}
             </div>
 
             {/* <Button variant="contained">Contained1</Button> */}

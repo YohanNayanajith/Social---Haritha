@@ -8,16 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const Dashboard = () => {
   
-  const token = useSelector((state) => state.user.token);
+  // const token = useSelector((state) => state.user.token);
   // const permissionState = useSelector(
   //   (state) => state.permissionData.permissionsData
   // );
   const dispatch = useDispatch();
 
-  if(token === null){
-    // navigate("/");
-    window.location.href = "/";
-  }
+  // if(token === null){
+  //   // navigate("/");
+  //   window.location.href = "/";
+  // }
   const userId = useSelector((state) => state.user.currentUser.user_id);
 
   // useEffect(() => {

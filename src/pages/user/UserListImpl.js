@@ -21,7 +21,7 @@ import { removeOtherUsers } from "../../redux/userRedux";
 export const UserListImpl = () => {
   const [loading, setLoading] = useState(true);
   const [trigger, setTrigger] = useState("s");
-  const token = useSelector((state) => state.user.token);
+  // const token = useSelector((state) => state.user.token);
   const otherUsers = useSelector((state) => state.user.otherUsers);
   const permissionsData = useSelector(
     (state) => state.permissionData.permissionsData
@@ -35,7 +35,7 @@ export const UserListImpl = () => {
   React.useEffect(() => {
     const getDataFromDB = async () => {
       dispatch(removeOtherUsers());
-      const result = await getUsers(dispatch, token);
+      const result = await getUsers(dispatch);
       if (result) {
         console.log("Get user data success");
         setTrigger(trigger + "s");
@@ -54,17 +54,14 @@ export const UserListImpl = () => {
         (item) => {
           // if (item.status) {
           rowData.push({
-            id: item.user_id,
-            col1: item.first_name,
-            col2: item.last_name,
-            col3: item.district,
-            col4: item.user_img,
-            col5: item.town,
-            col6: item.address,
-            col7: item.contact,
+            id: item._id,
+            col1: item.username,
+            col3: item.from,
+            col4: item.profilePicture,
+            col5: item.city,
+
             col8: item.email,
-            col9: item.status,
-            col10: item.birthday,
+            col9: item.isAdmin,
           });
         }
         // }
@@ -83,10 +80,16 @@ export const UserListImpl = () => {
       confirmButtonColor: "#378cbb",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        alert(id);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        // alert(id);
+        const result = await getUsers(id,dispatch);
+        if(result){
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }else{
+          Swal.fire("Delete Unsuccess!", "Your file has not been deleted.", "error");
+        }
+        
       }
     });
   };
@@ -136,36 +139,36 @@ export const UserListImpl = () => {
       },
     },
     { field: "col8", headerName: "Email", width: 180 },
-    { field: "col6", headerName: "Address", width: 180 },
-    { field: "col7", headerName: "Contact", width: 180 },
-    { field: "col5", headerName: "Town", width: 180 },
+    // { field: "col6", headerName: "Address", width: 180 },
+    // { field: "col7", headerName: "Contact", width: 180 },
+    { field: "col5", headerName: "City", width: 180 },
     { field: "col3", headerName: "District", width: 180 },
-    {
-      field: "col10",
-      headerName: "Birthday",
-      width: 180,
-      renderCell: (params) => {
-        return (
-          <>
-            {/* params.row.isCancel */}
-            <Stack direction="row" alignItems="center" spacing={1}>
-              {params.row.col10}
-              <IconButton
-                aria-label="edit"
-                size="large"
-                color="success"
-                onClick={() => wishBirthday(params.row)}
-              >
-                <CelebrationIcon />
-              </IconButton>
-            </Stack>
-          </>
-        );
-      },
-    },
+    // {
+    //   field: "col10",
+    //   headerName: "Birthday",
+    //   width: 180,
+    //   renderCell: (params) => {
+    //     return (
+    //       <>
+    //         {/* params.row.isCancel */}
+    //         <Stack direction="row" alignItems="center" spacing={1}>
+    //           {params.row.col10}
+    //           <IconButton
+    //             aria-label="edit"
+    //             size="large"
+    //             color="success"
+    //             onClick={() => wishBirthday(params.row)}
+    //           >
+    //             <CelebrationIcon />
+    //           </IconButton>
+    //         </Stack>
+    //       </>
+    //     );
+    //   },
+    // },
     {
       field: "col9",
-      headerName: "User Status",
+      headerName: "Is Admin",
       width: 150,
       renderCell: (params) => {
         return (
@@ -205,7 +208,7 @@ export const UserListImpl = () => {
           <>
             {/* params.row.isCancel */}
             <Stack direction="row" alignItems="center" spacing={1}>
-              {permissionsData.update_users ? (
+              {/* {permissionsData.update_users ? (
                 <IconButton
                   aria-label="edit"
                   size="large"
@@ -216,7 +219,7 @@ export const UserListImpl = () => {
                 </IconButton>
               ) : (
                 <></>
-              )}
+              )} */}
 
               {/* <IconButton
                 aria-label="edit"
@@ -226,9 +229,14 @@ export const UserListImpl = () => {
               >
                 <AdminPanelSettingsIcon />
               </IconButton> */}
-              {/* <IconButton aria-label="delete" size="large" color="error" onClick={() => deleteItem(params.row.id)}>
+              <IconButton
+                aria-label="delete"
+                size="large"
+                color="error"
+                onClick={() => deleteItem(params.row.id)}
+              >
                 <DeleteIcon />
-              </IconButton> */}
+              </IconButton>
             </Stack>
           </>
         );
@@ -258,7 +266,7 @@ export const UserListImpl = () => {
             <div>
               <h2>Normal Users</h2>
             </div>
-            <div>
+            {/* <div>
               {permissionsData.create_users ? (
                 <Button
                   variant="contained"
@@ -271,7 +279,7 @@ export const UserListImpl = () => {
               ) : (
                 <></>
               )}
-            </div>
+            </div> */}
 
             {/* <Button variant="contained">Contained1</Button> */}
           </Grid>

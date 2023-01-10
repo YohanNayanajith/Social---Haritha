@@ -14,15 +14,15 @@ import {
 } from "./postRedux";
 import { publicRequest } from "../requestMethods";
 
-export const getPost = async (dispatch, token) => {
+export const getPost = async (dispatch) => {
   dispatch(getPostStart());
   try {
-    const res = await publicRequest.get("/post", {
+    const res = await publicRequest.get("/api/posts", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
       },
     });
-    dispatch(getPostSuccess(res.data.data));
+    dispatch(getPostSuccess(res.data));
     return 1;
   } catch (err) {
     dispatch(getPostFailure());
@@ -30,12 +30,12 @@ export const getPost = async (dispatch, token) => {
   }
 };
 
-export const deletePost = async (id, dispatch,token) => {
+export const deletePost = async (id, dispatch) => {
   dispatch(deletePostStart());
   try {
-    const res = await publicRequest.delete(`/post/delete-post?post_id=${id}`,{
+    const res = await publicRequest.delete(`/api/posts/${id}`,{
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
       },
     });
     console.log(res);

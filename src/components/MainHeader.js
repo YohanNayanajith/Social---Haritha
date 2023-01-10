@@ -39,7 +39,7 @@ export default function MainHeader(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const userToken = useSelector((state) => state.user.token);
+  // const userToken = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.currentUser);
 
   const navigate = useNavigate();
@@ -54,10 +54,10 @@ export default function MainHeader(props) {
   //   };
   //   checkUserExist();
   // }, []);
-  if(userToken === null){
+  // if(userToken === null){
     // navigate("/");
-    window.location.href = "/";
-  }
+  //   window.location.href = "/";
+  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -85,7 +85,7 @@ export default function MainHeader(props) {
             </Box> */}
             <IconButton onClick={() => navigate("/profile")}>
             {/* <IconButton> */}
-              <Avatar alt="Profile Picture" src={user.user_img} />
+              <Avatar alt="Profile Picture" src={user.profilePicture} />
             </IconButton>
             {/* <NotificationMenu /> */}
             <MainHeaderMenu />

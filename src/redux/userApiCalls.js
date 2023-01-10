@@ -76,15 +76,15 @@ export const login = async (dispatch, data) => {
   }
 };
 
-export const getUsers = async (dispatch, token) => {
+export const getUsers = async (dispatch) => {
   dispatch(getUserStart());
   try {
     const res = await publicRequest.get("/user", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
       },
     });
-    dispatch(getUserSuccess(res.data.data));
+    dispatch(getUserSuccess(res.data));
     return 1;
   } catch (err) {
     dispatch(getUserFailure());
@@ -154,13 +154,13 @@ export const getAdminUser = async (dispatch, token, id) => {
   }
 };
 
-export const deleteUser = async (id, dispatch, token) => {
+export const deleteUser = async (id, dispatch) => {
   dispatch(deleteUserStart());
   try {
-    const res = await userRequest.delete(`/user/${id}`, {
+    const res = await userRequest.delete(`/api/users/${id}`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
       },
     });
     dispatch(deleteUserSuccess(id));
