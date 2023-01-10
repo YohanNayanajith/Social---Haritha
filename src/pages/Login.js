@@ -42,17 +42,17 @@ export default function Login() {
   const navigate = useNavigate();
   // const user = useSelector((state) => state.user.currentUser);
   // let userError = useSelector((state) => state.user.error);
-  let token = useSelector((state) => state.user.token);
+  // let token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
 
-  React.useEffect(()=>{
-    const checkUserExist = ()=>{
-      if(!(token == null)){
-        navigate("/dashboard");
-      }
-    }
-    checkUserExist();
-  },[]);
+  // React.useEffect(()=>{
+  //   const checkUserExist = ()=>{
+  //     if(!(token == null)){
+  //       navigate("/dashboard");
+  //     }
+  //   }
+  //   checkUserExist();
+  // },[]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -62,7 +62,7 @@ export default function Login() {
       password: data.get("password"),
     });
     const loginData = {
-      contact: data.get("contactNumber"),
+      email: data.get("contactNumber"),
       password: data.get("password"),
     };
     console.log(loginData);
@@ -125,9 +125,9 @@ export default function Login() {
                 margin="normal"
                 required
                 fullWidth
-                type="text"
+                type="email"
                 id="contactNumber"
-                label="Contact Number"
+                label="Email"
                 name="contactNumber"
                 autoComplete="contactNumber"
                 autoFocus

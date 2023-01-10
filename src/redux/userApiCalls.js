@@ -66,7 +66,7 @@ export const login = async (dispatch, data) => {
   console.log(data);
   dispatch(loginStart());
   try {
-    const res = await publicRequest.post("/local_user/login", data);
+    const res = await publicRequest.post("/api/auth/login", data);
     console.log(res);
     dispatch(loginSuccess(res.data));
     return 1;
